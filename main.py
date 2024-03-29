@@ -25,6 +25,7 @@ website_label = Label(text="Website:", font=(FONT_NAME, FONT_SIZE, "bold"))
 website_label.grid(column=0, row=1, sticky=E)
 
 website_input = Entry(width=35)
+website_input.focus()
 website_input.grid(column=1, row=1, columnspan=2, sticky=N+E+S+W)
 
 
