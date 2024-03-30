@@ -5,6 +5,13 @@ FONT_SIZE = 10
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def save():
+    with open('storage.txt', 'a') as file:
+        string = str(website_label',')
+        file.write(str(website_label) + ',' +   )
+
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -47,7 +54,7 @@ generate_button = Button(text="Generate Password", font=(FONT_NAME, FONT_SIZE, "
 generate_button.grid(column=2, row=3, sticky=W)
 
 ##Add button
-add_button = Button(text="Add", font=(FONT_NAME, FONT_SIZE, "bold"), width=36)
+add_button = Button(text="Add", font=(FONT_NAME, FONT_SIZE, "bold"), width=36, command=save)
 add_button.grid(column=0, row=4, columnspan=3, pady=10)
 
 
