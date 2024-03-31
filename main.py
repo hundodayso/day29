@@ -4,7 +4,7 @@ FONT_NAME = "Arial"
 FONT_SIZE = 10
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
-# ---------------------------- SAVE PASSWORD ------------------------------- #
+# ---------------------------- SAVE PASSWORD -------------------------------- #
 def save():
     with open('storage.txt', 'a') as file:
 
