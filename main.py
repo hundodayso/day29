@@ -7,8 +7,13 @@ FONT_SIZE = 10
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     with open('storage.txt', 'a') as file:
-        string = str(website_label',')
-        file.write(str(website_label) + ',' +   )
+
+        string = str(website_input.get()) + ' | ' + str(username_input.get()) + ' | ' + str(password_input.get()) + '\n'
+
+        file.write(string)
+        website_input.delete(0, END)
+        username_input.delete(0, END)
+        password_input.delete(0, END)
 
 
 
