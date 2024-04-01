@@ -21,6 +21,11 @@ def encrypt():
 
         fernet = Fernet(key)
 
+def decrypt():
+    pass
+
+
+
 
 
 
@@ -34,9 +39,6 @@ def generate_password():
     nr_letters = random.randint(8,10)
     nr_symbols = random.randint(2,4)
     nr_numbers = random.randint(2,4)
-
-
-
 
     password_letters = [random.choice(letters) for _ in range(nr_letters)]
     password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
@@ -52,23 +54,51 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD -------------------------------- #
 def save():
-    with open('storage.txt', 'a') as data_file:
-        website = website_input.get()
-        username = username_input.get()
-        password = password_input.get()
-        #string = str(website_input.get()) + ' | ' + str(username_input.get()) + ' | ' + str(password_input.get()) + '\n'
-        if len(website) == 0 or len(username) == 0 or len(password) == 0:
-            messagebox.showwarning(title="Blank fields!", message="Please do not leave any blank fields!")
+    website = website_input.get()
+    username = username_input.get()
+    password = password_input.get()
+    if len(website) == 0 or len(username) == 0 or len(password) == 0:
+        messagebox.showwarning(title="Blank fields!", message="Please do not leave any blank fields!")
 
-        else:
-            is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {username}"
-                                                          f"\nPassword: {password} \n\n Is it ok to save?")
-            if is_ok:
-                data_file.write(f"{website} | {username} | {password}\n")
-                website_input.delete(0, END)
-                username_input.delete(0, END)
-                password_input.delete(0, END)
-    encrypt()
+    else:
+        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {username}"
+                                                              f"\nPassword: {password} \n\n Is it ok to save?")
+        if is_ok:
+            data_to_write = (f"{website} | {username} | {password}\n")
+            website_input.delete(0, END)
+            username_input.delete(0, END)
+            password_input.delete(0, END)
+
+    with open('password_key.key', 'rb') as filekey:
+        key = filekey.read()
+        fernet = Fernet(key)
+
+### open to decrypt###
+    with open('storage.txt', 'rb') as enc_file:
+        is_empty = enc_file.read(1)
+        enc_passwords = enc_file.read()
+
+    if not is_empty:
+        plain_text_passwords = fernet.decrypt(enc_passwords)
+
+        with open('storage.txt', 'wb') as dec_file:
+            dec_file.write(plain_text_passwords)
+
+        ##append to decrypted file.
+        with open('storage.txt', 'a') as data_file:
+            data_file.write(data_to_write)
+    else:
+        with open('storage.txt', 'a') as data_file:
+            data_file.write(data_to_write)
+
+
+
+
+
+
+
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
