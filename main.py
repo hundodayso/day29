@@ -5,7 +5,7 @@ import pyperclip
 FONT_NAME = "Arial"
 FONT_SIZE = 10
 
-hello = "leng"
+hello = "leng"a
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
