@@ -2,10 +2,27 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+from cryptography.fernet import Fernet
 FONT_NAME = "Arial"
 FONT_SIZE = 10
 
-hello = "leng"a
+hello = "leng"
+
+# --------------------- CRYPTOGRAPHY -------------------------------#
+
+# key = Fernet.generate_key()
+#
+# with open('password_key.key', 'wb') as filekey:
+#     filekey.write(key)
+
+def encrypt():
+    with open('password_key.key', 'rb') as filekey:
+        key = filekey.read()
+
+        fernet = Fernet(key)
+
+
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -51,6 +68,7 @@ def save():
                 website_input.delete(0, END)
                 username_input.delete(0, END)
                 password_input.delete(0, END)
+    encrypt()
 
 # ---------------------------- UI SETUP ------------------------------- #
 
