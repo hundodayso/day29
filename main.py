@@ -81,6 +81,7 @@ def save():
     if not is_empty:
         plain_text_passwords = fernet.decrypt(enc_passwords)
 
+
         with open('storage.txt', 'wb') as dec_file:
             dec_file.write(plain_text_passwords)
 
