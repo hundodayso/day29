@@ -78,19 +78,33 @@ def save():
         is_empty = enc_file.read(1)
         enc_passwords = enc_file.read()
 
-    if not is_empty:
-        plain_text_passwords = fernet.decrypt(enc_passwords)
+    plain_text_passwords = fernet.decrypt(enc_passwords)
 
-
-        with open('storage.txt', 'wb') as dec_file:
-            dec_file.write(plain_text_passwords)
+    with open('storage.txt', 'wb') as dec_file:
+        dec_file.write(plain_text_passwords)
 
         ##append to decrypted file.
-        with open('storage.txt', 'a') as data_file:
-            data_file.write(data_to_write)
+    with open('storage.txt', 'a') as data_file:
+        data_file.write(data_to_write)
+
+    encrypt_it = input("do you want to encrypt?").lower()
+
+    if encrypt_it == "y":
+        with open('storage.txt', 'rb') as a_file:
+            passwords_to_encrypt = a_file.read()
+
+        encrypted_passwords = fernet.encrypt(passwords_to_encrypt)
+
+        with open('storage.txt', 'wb') as enc_file:
+            enc_file.write(encrypted_passwords)
     else:
-        with open('storage.txt', 'a') as data_file:
-            data_file.write(data_to_write)
+        print("no encryption")
+
+
+
+    # else:
+    #     with open('storage.txt', 'a') as data_file:
+    #         data_file.write(data_to_write)
 
 
 
