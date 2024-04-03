@@ -64,56 +64,37 @@ def save():
         is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {username}"
                                                               f"\nPassword: {password} \n\n Is it ok to save?")
         if is_ok:
-            data_to_write = (f"{website} | {username} | {password}\n")
+            data_to_write = (f"\n{website} | {username} | {password} |")
             website_input.delete(0, END)
             username_input.delete(0, END)
             password_input.delete(0, END)
 
     with open('password_key.key', 'rb') as filekey:
         key = filekey.read()
-        fernet = Fernet(key)
-
 ### open to decrypt###
     with open('storage.txt', 'rb') as enc_file:
-        is_empty = enc_file.read(1)
         enc_passwords = enc_file.read()
+        print(enc_passwords)
+
+    fernet = Fernet(key)
 
     plain_text_passwords = fernet.decrypt(enc_passwords)
 
     with open('storage.txt', 'wb') as dec_file:
         dec_file.write(plain_text_passwords)
 
-        ##append to decrypted file.
+##append to decrypted file.
     with open('storage.txt', 'a') as data_file:
         data_file.write(data_to_write)
 
-    encrypt_it = input("do you want to encrypt?").lower()
+    with open('storage.txt', 'rb') as a_file:
+        passwords_to_encrypt = a_file.read()
 
-    if encrypt_it == "y":
-        with open('storage.txt', 'rb') as a_file:
-            passwords_to_encrypt = a_file.read()
+    fernet = Fernet(key)
+    encrypted_passwords = fernet.encrypt(passwords_to_encrypt)
 
-        encrypted_passwords = fernet.encrypt(passwords_to_encrypt)
-
-        with open('storage.txt', 'wb') as enc_file:
-            enc_file.write(encrypted_passwords)
-    else:
-        print("no encryption")
-
-
-
-    # else:
-    #     with open('storage.txt', 'a') as data_file:
-    #         data_file.write(data_to_write)
-
-
-
-
-
-
-
-
-
+    with open('storage.txt', 'wb') as enc_file:
+        enc_file.write(encrypted_passwords)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
